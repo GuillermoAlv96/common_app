@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "397508701481",
+    "project_id": "hairdressing-365c7",
+    "storage_bucket": "hairdressing-365c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397508701481:android:f8c16cf22e2139776f9b38",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397508701481-igt0ei8766s59803afhq80h0jc89lfrq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.login",
+            "certificate_hash": "d913b62acb86ba40ba9129db9cfcb31d403818ca"
+          }
+        },
+        {
+          "client_id": "397508701481-ik6l78g2igpbdh3cks0u2df6nr5q4mm7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuA04ppJNSAcBoJMQgxzesVrAum7KQV9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397508701481-ik6l78g2igpbdh3cks0u2df6nr5q4mm7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "397508701481-31k3ajblvoub8nrt62j5i20sgc43rmko.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.barberShop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
