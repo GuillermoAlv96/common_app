@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:login/src/services/auth.dart';
 
 class LoginWithEmailAndPassword extends StatefulWidget {
-  final bool email;
-  final bool password;
   final bool rePassword;
   final bool phone;
 
-  LoginWithEmailAndPassword(
-      {this.email = true,
-      this.password = true,
-      this.rePassword = true,
-      this.phone = true});
+  LoginWithEmailAndPassword({this.rePassword = true, this.phone = true});
 
   @override
   State<LoginWithEmailAndPassword> createState() =>
@@ -18,13 +13,14 @@ class LoginWithEmailAndPassword extends StatefulWidget {
 }
 
 class _LoginWithEmailAndPasswordState extends State<LoginWithEmailAndPassword> {
+  final AuthService _auth = AuthService();
+  String email = '';
+  var password = '';
+  var rePassword = '';
+  var phone = '';
+
   @override
   Widget build(BuildContext context) {
-    var email = '';
-    var password = '';
-    var rePassword = '';
-    var phone = '';
-
     return Dialog(
       child: Container(
         padding:
@@ -37,20 +33,25 @@ class _LoginWithEmailAndPasswordState extends State<LoginWithEmailAndPassword> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                buildTextFormField(variable: email, key: 'email', labelText: 'Email',icon: Icon(Icons.email_outlined)),
+                TextFormField(
+                    key: Key('email'),
+                    keyboardType: TextInputType.text,
+                    decoration: _inPutDecoration(
+                        labelText: 'Email', icon: Icon(Icons.email_outlined)),
+                    style: _textStyle(),
+                    onChanged: (val) {
+                      setState(() => email = val);
+                    }),
                 SizedBox(height: 20),
-                widget.phone == true
-                    ? buildTextFormField(
-                        variable: phone, key: 'phone', labelText: 'Phone',icon: Icon(Icons.phone_outlined))
-                    : Container(),
-                SizedBox(height: 20),
-                buildTextFormField(
-                    variable: password, key: 'password', labelText: 'Password',icon: Icon(Icons.password)),
-                SizedBox(height: 20),
-                widget.rePassword == true
-                    ? buildTextFormField(
-                        variable: rePassword, key: 'rePassword', labelText: 'Confirm Password',icon: Icon(Icons.password))
-                    : Container(),
+                TextFormField(
+                    key: Key('password'),
+                    keyboardType: TextInputType.text,
+                    decoration: _inPutDecoration(
+                        labelText: 'Password', icon: Icon(Icons.password)),
+                    style: _textStyle(),
+                    onChanged: (val) {
+                      setState(() => password = val);
+                    }),
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -59,7 +60,13 @@ class _LoginWithEmailAndPasswordState extends State<LoginWithEmailAndPassword> {
                         onPressed: () => Navigator.pop(context),
                         child: _buttonText(text: 'Close')),
                     ElevatedButton(
-                        onPressed: () {}, child: _buttonText(text: 'Login')),
+                        onPressed: () async {
+                          print(email);
+                          print(password);
+                          dynamic result = await _auth.signIn(email: email, password: password);
+                          setState(() {});
+                        },
+                        child: _buttonText(text: 'Login')),
                   ],
                 )
               ],
@@ -71,12 +78,14 @@ class _LoginWithEmailAndPasswordState extends State<LoginWithEmailAndPassword> {
   }
 
   buildTextFormField(
-      {var variable, required String key, required String labelText, Widget? icon }) {
+      {var variable,
+      required String key,
+      required String labelText,
+      Widget? icon}) {
     return TextFormField(
       key: Key(key),
       keyboardType: TextInputType.text,
-      decoration: _inPutDecoration(labelText: labelText,icon: icon ),
-
+      decoration: _inPutDecoration(labelText: labelText, icon: icon),
       style: _textStyle(),
       onChanged: (val) {
         setState(() => variable = val);
@@ -84,7 +93,7 @@ class _LoginWithEmailAndPasswordState extends State<LoginWithEmailAndPassword> {
     );
   }
 
-  _inPutDecoration({Color? fillColor, String? labelText ,Widget? icon })  {
+  _inPutDecoration({Color? fillColor, String? labelText, Widget? icon}) {
     return InputDecoration(
         prefixIcon: icon,
         fillColor: fillColor ?? Theme.of(context).cardColor,
